@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '../stores/auth'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
@@ -41,7 +41,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore()
-  
+  console.log(from)
   if (to.meta.requiresAuth && !auth.isAuthenticated) {
     next('/login')
   } else if ((to.path === '/login' || to.path === '/register') && auth.isAuthenticated) {

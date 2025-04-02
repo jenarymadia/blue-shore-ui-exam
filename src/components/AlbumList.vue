@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, computed } from 'vue'
-import { useAlbumStore } from '@/stores/album'
-import { useAuthStore } from '@/stores/auth'
-import type { Album, VoteType } from '@/types/album'
-import { isAdmin, calculateVoteCounts } from '@/types/album'
-import { debounce } from '@/utils/debounce'
+import { useAlbumStore } from '../stores/album'
+import { useAuthStore } from '../stores/auth'
+import type { Album, VoteType } from '../types/album'
+import { isAdmin, calculateVoteCounts } from '../types/album'
+import { debounce } from '../utils/debounce'
 
 const albumStore = useAlbumStore()
 const authStore = useAuthStore()

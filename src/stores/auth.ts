@@ -52,8 +52,8 @@ export const useAuthStore = defineStore('auth', () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-XSRF-TOKEN': getCsrfToken(),
-          'X-Requested-With': 'XMLHttpRequest'
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
         },
         body: JSON.stringify(data),
         credentials: 'include'
@@ -86,8 +86,8 @@ export const useAuthStore = defineStore('auth', () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-XSRF-TOKEN': getCsrfToken(),
-          'X-Requested-With': 'XMLHttpRequest'
+          'Accept': 'application/json',
+          'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
         },
         body: JSON.stringify(data),
         credentials: 'include'
@@ -121,6 +121,17 @@ export const useAuthStore = defineStore('auth', () => {
     if (savedToken) {
       token.value = savedToken
     }
+  }
+
+  function getCookie(name: string): string {
+    const value = `; ${document.cookie}`
+    const parts = value.split(`; ${name}=`)
+    if (parts.length === 2) {
+      const cookieValue = parts.pop()?.split(';').shift()
+      // Laravel's XSRF token is URL-encoded, so we need to decode it
+      return cookieValue ? decodeURIComponent(cookieValue) : ''
+    }
+    return ''
   }
 
   return {
